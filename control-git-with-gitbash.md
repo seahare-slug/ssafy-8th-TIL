@@ -67,6 +67,9 @@
 </div>
 
 ---
++) 여러가지를 수정하고 원하는 부분(라인)만 골라서 commit 하는 것은 git bash 로는 불가능.
++) 따라서 git bash만 이용하는 경우에는 commit할 부분만 수정한 후 바로 commit, 수정 
+
 
 ## Thinking !
 
