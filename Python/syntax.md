@@ -82,7 +82,22 @@
 
   #
 
-- 파이썬에서는 오버라이팅은 있지만 언패킹(Asterisk)라는 문법이 있어서 **오버로딩**은 없다.
+- positional arguments와 keyword arguments
+
+  ```python
+  def talk(*content, **person)
+    print(content, "This is positional arguments") # list 또는 tuple 형태로 반환
+    for key, value in person.items():
+      print(f"{key}: {value} "This is keyword arguments"") # dictionary 형태로 반환
+
+  talk("brrrr", name="song", age=24)
+  ```
+
+  - keyword argument는 생략가능하기 때문에 positional argument보다 앞에 올 수 없음
+
+  #
+
+- 파이썬에서는 오버라이팅은 있지만 **언패킹(Asterisk)**라는 문법이 있어서 **오버로딩**은 없다.
   - 오버로딩(Overloading) : 같은 이름의 메서드 여러개를 가지면서 매개변수의 유형과 개수가 다르도록 하는 기술
   - 오버라이딩(Overriding) : 상위 클래스가 가지고 있는 메서드를 하위 클래스가 재정의해서 사용
 
