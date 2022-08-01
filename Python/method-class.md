@@ -66,6 +66,56 @@ def any_func_name():
 
 ---
 
+## 상속
+
+클래스를 정의할 때 사용한 메서드들을 이용하여 새로운 클래스를 생성하고 싶은 경우 사용.
+
+```python
+# ws_8_4
+class PublicTransport:
+
+    def __init__(self, name, fare):
+        self.name = name
+        self.fare = fare
+        self.total_passenger = 0
+
+    def get_in(self, number_of_passenger):
+        self.total_passenger += number_of_passenger
+
+    def get_out(self, number_of_passenger):
+        self.total_passenger -= number_of_passenger
+
+    def profit(self):
+        return self.fare * self.total_passenger
+
+
+# 인자로 상속 받은 부모 클래스를 작성함
+class Bus(PublicTransport):
+    # 필요한 부분은 오버라이팅으로 새로 작성
+    def __init__(self, name, fare, limit):
+        self.name = name
+        self.fare = fare
+        self.total_passenger = 0
+        self.limit = limit
+
+    def get_in(self, number_of_passenger):
+        self.total_passenger += number_of_passenger
+        if self.total_passenger > self.limit:
+            print("더 이상 탑승할 수 없습니다.")
+
+
+bus = Bus("bus", 500, 20)
+bus.get_in(19)
+print("====")
+bus.get_in(19)
+
+```
+
+- mro 함수
+  - 원하는 인스턴스나 클래스 등이 어떤 부모나 조상을 가지는지 보여줌
+
+---
+
 ## QnA
 
 Q1. 클래스 선언 시 아래 두개 예시의 차이는?
