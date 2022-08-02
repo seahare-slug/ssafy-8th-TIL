@@ -2,6 +2,8 @@
 
 ---
 
+![css-box](./img/css-box-model-box-sizing.png)
+
 - **text-align: center vs margin: 0 auto**
 
   - text-align: center
