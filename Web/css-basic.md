@@ -6,14 +6,14 @@
 
 - **text-align: center vs margin: 0 auto**
 
-  - text-align: center
+  - `text-align: center`
 
     - 대상의 부모에 적용
       - 부모는 block, 자식은 inline일 때
     - 대상에게 바로 적용
       - 대상이 block일 때
 
-  - margin: 0 auto
+  - `margin: 0 auto`
     - 대상에 적용
     - 부모는 block, 자식의 width는 100%보다 작아야함
     #
@@ -40,13 +40,17 @@
 #
 
 - **display: none vs visibility: hidden**
-  - display: none
+
+  - `display: none`
     - 아예 요소 자체를 없애는 것
-  - visibility: hidden
+  - `visibility: hidden`
     - 요소를 투명하게, 원래 자리는 그대로 차지
+
   #
 
-#
+- **justify, align**
+  - justify: 정렬되는 방향과 순방향(main-axis)으로 정렬
+  - align: 정렬되는 방향과 직각방향(cross-axis)으로 정렬
 
 ## 문법
 
@@ -88,7 +92,30 @@
   #
 
 - **:nth-child()**
+
   - 하위요소 선택자
   - `.some-class > div:nth-child(2)`: some-class의 직계 자식인 div들 중에서 두번째
   - `.some-class div:nth-child(2)`: some-class의 자식, 자손인 div들 중에서 두번째
   - `.some-class :nth-child(2)`: some-class의 자식, 자손인 모든 요소들의 두번째
+
+  #
+
+- **가상요소**
+
+  - `::before`: 원하는 요소의 바로 앞에 무언가 있다 가정하고 css를 적용 시키고 싶을 때
+  - `::after`: 원하는 요소의 바로 뒤에 무언가 있다 가정하고 css를 적용 시키고 싶을 때
+
+  #
+
+- **float**
+
+  - left, right, none
+  - 3차원적으로 띄워서 원하는 방향으로 배치시킴
+  - 앞에 요소가 띄워지면 뒤에 요소는 아래로 들어가면서 가려질 수 있지만 뒤에 요소가 띄워진다고 앞에 요소 뒤로 올라가진 않음
+  - https://www.youtube.com/watch?v=xara4Z1b18I
+
+  #
+
+- **flex**
+  - 정렬하는 방식
+  -
