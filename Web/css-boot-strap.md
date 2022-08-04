@@ -1,4 +1,4 @@
-## Boot Strap
+# Boot Strap
 
 ---
 
@@ -11,8 +11,6 @@
 
 > > > JS for
 > > > `<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script> `
-
----
 
 - 장점
 
@@ -58,3 +56,21 @@
   </div>
 </div>
 ```
+
+---
+
+# 반응형
+
+- Media Query와 Break Point
+  - Media Query
+  ```css
+  @media (max-width: 1200px) and (min-width: 800px) {
+    <!-- 변경하고 싶은 class의 내용 -->
+    <!-- 변경되는 범위는 800px ~ 1200px -->
+  }
+  ```
+  - Break Point
+  ```html
+  col-lg-3
+  <!-- 크기가 lg에 해당될 때 col의 차지 공간을 3으로 -->
+  ```
