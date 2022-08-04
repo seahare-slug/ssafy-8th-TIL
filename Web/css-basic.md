@@ -1,21 +1,30 @@
-## 기초 개념
+# 기초 개념
 
 ---
 
 ![css-box](./img/css-box-model-box-sizing.png)
 
-- **text-align: center vs margin: 0 auto**
+- **text-align: center** vs **margin: 0 auto** vs **justify-content: center**
 
   - `text-align: center`
 
-    - 대상의 부모에 적용
+    - 대상의 부모에 선언
       - 부모는 block, 자식은 inline일 때
-    - 대상에게 바로 적용
+    - 대상에게 바로 선언
       - 대상이 block일 때
+    - 여기서 align는 축에 대한 의미는 없고 텍스트 정렬이라는 그 자체의 의미로 가로 중앙 정렬임
 
   - `margin: 0 auto`
-    - 대상에 적용
-    - 부모는 block, 자식의 width는 100%보다 작아야함
+
+    - 대상에게 바로 선언
+      - 부모는 block, 자식의 width는 100%보다 작아야함
+
+  - `justify-content: center`
+    - 대상의 부모에 선언
+      - 부모가 flex일 때
+    - justify, align
+      - justify: 정렬되는 방향과 순방향(main-axis)으로 정렬
+      - align: 정렬되는 방향과 직각방향(cross-axis)으로 정렬
     #
 
 - **선택자 우선순위**
@@ -48,11 +57,7 @@
 
   #
 
-- **justify, align**
-  - justify: 정렬되는 방향과 순방향(main-axis)으로 정렬
-  - align: 정렬되는 방향과 직각방향(cross-axis)으로 정렬
-
-## 문법
+# 문법
 
 ---
 
@@ -115,7 +120,3 @@
   - https://www.youtube.com/watch?v=xara4Z1b18I
 
   #
-
-- **flex**
-  - 정렬하는 방식
-  -
