@@ -28,6 +28,19 @@
 
 #Grid
 
+- Color
+  - <span style="color:#007bff">primary</span>
+  - <span style="color:#6c757d">secondary</span>
+  - <span style="color:#28a745">success</span>
+  - <span style="color:#dc3545">danger</span>
+  - <span style="color:#ffc107">warning</span>
+  - <span style="color:#17a2b8">info</span>
+  - <span style="color:#f8f9fa">light</span>
+  - <span style="color:#343a40">dark</span>
+  - <span style="color:#fff">white</span>
+
+#
+
 - Container
   - container
   - container-fluid
