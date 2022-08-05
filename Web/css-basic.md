@@ -118,6 +118,6 @@
   - left, right, none
   - 3차원적으로 띄워서 원하는 방향으로 배치시킴
   - 앞에 요소가 띄워지면 뒤에 요소는 아래로 들어가면서 가려질 수 있지만 뒤에 요소가 띄워진다고 앞에 요소 뒤로 올라가진 않음
-  - https://www.youtube.com/watch?v=xara4Z1b18I
+  - [실행 영상](https://www.youtube.com/watch?v=xara4Z1b18I)
 
   #
