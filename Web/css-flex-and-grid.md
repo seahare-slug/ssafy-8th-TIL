@@ -27,13 +27,15 @@
   - `no-wrap`: flex item이 한 줄에 가득 차게 되면 넘치지 않게 전체적인 item의 width를 작게 조절
   - `wrap`: flex item이 한줄에 가득차게 되면 main-axis의 다음 라인으로 넘겨버림
 
+#
+
 - **정렬**
-  - `justify`:
-  - `align`:
+  - `justify`: main-axis 기준으로 정렬
+  - `align`: cross-axis 기준으로 정렬
     - `content`:
     - `items`:
     - `self`:
-      - `center`:
+      - `center`: 가운데 정렬
       - `flex-start`:
       - `flex-end`:
       - `space-around`:
