@@ -4,14 +4,21 @@
 
 ![css-box](./img/css-box-model-box-sizing.png)
 
+#
+
+- **정렬**
+
+  - 기본적으로 정렬은 해당 요소의 바깥으로 여백이 있어야 가능함.
+  - inline등 요소에 딱 맞춰주는 컨테이너 안에서는 정렬이 불가능함.
+
 - **text-align: center** vs **margin: 0 auto** vs **justify-content: center**
 
   - `text-align: center`
 
     - 대상의 부모에 선언
-      - 부모는 block, 자식은 inline일 때
+      - 부모는 block, 자손은 inline일 때 모든 inline 자손을 정렬
     - 대상에게 바로 선언
-      - 대상이 block일 때
+      - 대상이 block일 때 text를 정렬
     - 여기서 align는 축에 대한 의미는 없고 텍스트 정렬이라는 그 자체의 의미로 가로 중앙 정렬임
 
   - `margin: 0 auto`
