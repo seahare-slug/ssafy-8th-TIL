@@ -31,17 +31,21 @@
 
 - **정렬**
   - `justify`: main-axis 기준으로 정렬
+    - `content`: 한 줄을 하나로 보고 정렬
+    - `items`: flex에서는 적용 안 됨. 각 요소의 영역을 기준으로 정렬이지만 각 요소의 영역이 정의되지 않음.
+    - `self`: flex에서는 적용 안 됨. 자신의 영역을 기준으로 정렬이지만 자신의 영역이 정의되지 않음.
   - `align`: cross-axis 기준으로 정렬
-    - `content`:
-    - `items`:
-    - `self`:
-      - `center`: 가운데 정렬
-      - `flex-start`:
-      - `flex-end`:
-      - `space-around`:
-      - `space-evenly`:
-      - `space-between`:
-      - `stretch`:
+    - `content`: wrap이 설정된 상태여야 함. 높이에 대한 여백에 있어야함. 한 줄을 하나로 보고 정렬.
+    - `items`: 높이에 대한 여백이 있어야함. 각 요소를 기준으로 정렬.
+    - `self`: flex에서는 적용 안 됨.
+  - **정렬의 종류**
+    - `center`: 가운데 정렬
+    - `flex-start`: 기준의 출발점으로 정렬(justify의 기본값)
+    - `flex-end`: 기준의 끝점으로 정렬
+    - `space-between`: 양 끝 여백은 없애고 나머지 여백을 똑같이. 0 요소 1 요소 1 요소 0
+    - `space-around`: 각 요소의 양쪽 여백을 똑같이. 1 요소 1 1 요소 1 1 요소 1.
+    - `space-evenly`: 각 요소의 공간을 똑같이. 1 요소 1 요소 1 요소 1.
+    - `stretch`: 기준으로 꽉 채워지게(align의 기본값)
 
 # Grid
 
