@@ -40,3 +40,4 @@ def calc_sum(n):
 	return n * (n + 1) // 2 # 3번
 # 최대 3번의 수행(연산)
 ```
+![time-complex](./img/time-complex.PNG)
