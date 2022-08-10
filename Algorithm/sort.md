@@ -51,3 +51,19 @@ def counting_sort(unsorted_list, k):
 		sorted_list[count_list[unsorted_list[i]]] = unsorted_list[i] # 원본 배열을 순환하면서 나오는 값들을 정해진 자리에 맞게 넣어줌
 
 ```
+
+### 3. 선택 정렬
+
+- 데이터들 중에서 가장 작은 값을 직접 찾아서 맨 앞에 위치시키는 것.
+- 찾을 때마다 한 칸씩 뒤에 위치시켜 정렬
+- O(n^2^)
+
+```python
+def selection_sort(list):
+	for i in range(len(list) - 1):
+		min_idx = i
+		for j in range(i + 1, len(list)):
+			if list[min_idx] > list[j]:
+				min_idx = j
+		list[i], list[min_idx] = list[min_idx], list[i]
+```
