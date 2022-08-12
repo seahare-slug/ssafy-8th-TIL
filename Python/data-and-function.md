@@ -55,3 +55,30 @@ talk("hello", world)  # 인수
 ```
 
 ---
+
+#### 데이터 비교 연산과 문자열 선언
+
+```python
+def comp_str(str1, str2):
+    if str1 is str2:
+        return (f"{str1} is {str2}")
+    elif str1 == str2:
+        return (f"{str1} == {str2}")
+    else:
+        return "not same"
+
+s1 = "abc"
+s2 = "abc"
+s3 = "def"
+s4 = s1
+s5 = s1[:2] + "c"
+# is 는 주소까지 같은지 비교
+# == 는 내용물의 형태만 비교
+print(comp_str(s1, s2)) # s1 is s2
+print(comp_str(s1, s3)) # not same
+print(comp_str(s1, s4)) # s1 is s2
+print(comp_str(s1, s5)) # s1 == s2
+```
+
+같은 문자열 선언시 메모리 공간 확보를 위해 새로운 메모리로 바인딩하지 않고 같은 문자열의 주소를 참조함.
+따라서 s1과 s2는 각각 선언 돼었지만 같은 주소를 가지고 있음
