@@ -7,7 +7,7 @@
 - **대표적인 정렬 방식의 종류**
   - [버블 정렬](#1-버블-정렬)(Bubble Sort)
   - [카운팅 정렬](#2-카운팅-정렬)(Counting Sort)
-  - 선택 정렬(Selection Sort)
+  - [선택 정렬](#3-선택-정렬)(Selection Sort)
   - 퀵 정렬(Quick Sort)
   - 삽입 정렬(Insertion Sort)
   - 병합 정렬(Merge Sort)
