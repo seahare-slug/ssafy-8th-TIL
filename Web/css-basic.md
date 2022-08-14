@@ -69,14 +69,6 @@
 
 ---
 
-- **a(anchor): 닻**
-
-  - href
-  - target(\_self, \_blank, \_parent, \_top)
-  - rel
-
-  #
-
 - **position**
 
   - relative: 부모 요소가 **static**이면 안 됨. 원래 요소의 자리 차지(O), 옮겨진 위치는 자리 차지(X)
