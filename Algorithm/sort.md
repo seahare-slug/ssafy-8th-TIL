@@ -21,7 +21,7 @@
 - O(n^2^)
 
 ```python
-def bubble_sort(list, N)) # N = len(list)
+def bubble_sort(list, N)): # N = len(list)
 	for i in range(N - 1, 0, -1): # 맨 뒤부터 정렬된 부분 제외하고 반복
 		for j in range(0, i): # 정렬
 			if list[j] > list[j + 1]:
