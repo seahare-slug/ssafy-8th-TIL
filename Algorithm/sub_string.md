@@ -65,8 +65,35 @@ def kmp(total_str, target_str):
 
 1. target_str의 해시 값을 구한다.
 
-   - ABCD -> (ord(A) \* 3^3^) + (ord(B) \* 3^2^) + (ord(C) \* 3^1^) + (ord(D) \* 3^0^)
+   - _ABCD -> (ord(A) \* 3^3^) + (ord(B) \* 3^2^) + (ord(C) \* 3^1^) + (ord(D) \* 3^0^)_
 
 2. total_str에서 target_str의 길이만큼 순회하면서 해시 값을 계산하고 target_str과 비교한다.
 
-해시 값 = target \* str의 길이 \* (target_str의 해시값 \- 맨 앞의 문자열 값 \* target_str의 길이^제곱수^) \+ 탐색할 total_str의 문자열
+3. 만약 일치하지 않다면 그 다음칸으로 이동하고 비교하는 문자열의 첫 번째 해시 값을 빼고 새로운 해시 값만 더해주면 된다.
+
+   - _해시 값 = target \* str의 길이 \* (target_str의 해시값 \- 맨 앞의 문자열 값 \* target_str의 길이^제곱수^) \+ 탐색할 total_str의 문자열_
+
+```python
+def rabin_karp(total_str, target_str):
+    total_str_hash = 0
+    target_str_hash = 0
+		total_str_len = len(total_str)
+		target_str_len = len(target_str)
+    power = 1
+
+    for i in range(target_str_len):
+      total_str_hash += ord(total_str[target_str_len - 1 - i]) * power
+      target_str_hash += ord(target_str[target_str_len - 1 - i]) * power
+      if i < target_str_len - 1:
+        power *= 2
+
+    for i in range(1, total_str_len - target_str_len + 1):
+      total_str_hash = 2 * (total_str_hash - ord(total_str[i - 1]) * power) + ord(total_str[target_str_len - 1 + i])
+
+    	if total_str_hash == target_str_hash:
+      	for j in range(target_str_len):
+        	if total_str[i + j] != target_str[j]:
+						break
+      	else:
+          print(f"{i + 1}번째에서 발견했습니다.")
+```
