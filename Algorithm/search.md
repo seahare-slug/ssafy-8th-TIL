@@ -71,3 +71,49 @@ def binary_search(list, target):
 			start = middle + 1
 	return -1
 ```
+
+#
+
+#### DFS(Depth First Search)
+
+- 깊이 우선 탐색
+- 노드와 연결돼 있는 간선이 주어질 때
+- stack과 visited 배열을 이용하여 분기가 있었던 노드와 탐색 완료한 노드를 저장
+
+```python
+current = 1
+# 노드와 간선과의 관계를 딕셔너리로 표현
+route_dict = {}
+route_dict[1: [2, 3]]
+route_dict[2: [4, 5]]
+route_dict[6: [7, 8]]
+.
+.
+.
+while current != target:
+	# 현재 위치의 키가 등록이 안 돼 있을 때
+	if current not in route_dict.keys():
+		# - stack에 요소가 있으면 이동
+		if len(stack) != 0:
+			current = stack.pop()
+		# - stack에 요소가 없으면 종료
+		else:
+			return False
+	# 키는 있는데 길이 없을 때
+	elif len(route_dict[current]) == 0:
+		# - stack에 요소가 있으면 이동
+		if len(stack) != 0:
+			current = stack.pop()
+		# - stack에 요소가 없으면 종료
+		else:
+			return False
+	# 길이 하나일 때
+	elif len(route_dict[current]) == 1:
+		# - 하나 있는 길로 이동하고 그 길은 방문한 길이 됨
+		visited.append(current)
+		current = route_dict[current]
+	# 길이 두개 이상일 때
+	elif len(route_dict[current]) == 2:
+		stack.append(current)
+		current = route_dict[current].pop()
+```
