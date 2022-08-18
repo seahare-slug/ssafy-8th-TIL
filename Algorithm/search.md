@@ -80,6 +80,8 @@ def binary_search(list, target):
 - 노드와 연결돼 있는 간선이 주어질 때
 - stack과 visited 배열을 이용하여 분기가 있었던 노드와 탐색 완료한 노드를 저장
 
+**1. while과 조건문 이용**
+
 ```python
 current = 1
 # 노드와 간선과의 관계를 딕셔너리로 표현
@@ -117,3 +119,6 @@ while current != target:
 		stack.append(current)
 		current = route_dict[current].pop()
 ```
+
+**2. 재귀함수 이용**
+**3. 인접배열 이용**
