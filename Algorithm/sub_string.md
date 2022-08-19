@@ -3,8 +3,8 @@
 ---
 
 - [KMP](#kmp-algorithm)
-- [라빈-카프](#)
-- [보이어 무어](#)
+- [라빈-카프](#rabin-karp-algorithm)
+- [보이어 무어](#boyer-moore-algorithm)
 
 #
 
@@ -13,6 +13,9 @@
 ---
 
 **target_str의 앞뒤의 일치 패턴을 찾아 불필요한 반복 탐색을 막는 방법**
+
+- 일반적으로 O(n)보다 적음
+- 최악의 경우 O(mn)
 
 1. 찾고자하는 부분 문자열(sub-string)에 대해 앞뒤(접두, 접미)의 일치 패턴의 길이를 찾는다.
    - ababbab
@@ -63,6 +66,9 @@ def kmp(total_str, target_str):
 
 **해시 값(제곱수와 해당 값의 곱)을 이용하여 target_str의 해시 값과 total_str에 포함된 문자열의 해시 값을 비교**
 
+- 일반적으로 O(n)보다 적음
+- 최악의 경우 O(mn)
+
 1. target_str의 해시 값을 구한다.
 
    - _ABCD -> (ord(A) \* 3^3^) + (ord(B) \* 3^2^) + (ord(C) \* 3^1^) + (ord(D) \* 3^0^)_
@@ -96,4 +102,49 @@ def rabin_karp(total_str, target_str):
 						break
       	else:
           print(f"{i + 1}번째에서 발견했습니다.")
+```
+
+#
+
+#### Boyer-Moore Algorithm
+
+---
+
+**total_str의 뒷부분부터 비교하면 target_str에서 존재하지 않는 기준으로 불필요한 비교를 하지 않아도 됨.**
+
+- 일반적으로 O(n)보다 적음
+- 최악의 경우 O(mn)
+
+1. target_str의 맨 뒤와 total_str의 n번째를 비교
+2. n번째 요소가 있으면 target_str에서 n번째 요소가 있는 위치만큼 이동해서 다시 비교
+   ![boyer-moore](./img/boyer_moore.PNG)
+3. 일치한다면 n-1번째 요소와 비교
+
+```python
+reverse_target_str = target_str[::-1]
+skip_step = list(range((len(target_str))))
+is_find = False
+
+total_idx = len(pattern)-1
+
+while total_idx < len(total_str):
+    next_idx = len(reverse_target_str)
+    reverse_target_idx = 0
+    if reverse_target_str[reverse_target_idx] == total_str[total_idx]:
+        while reverse_target_idx < len(reverse_target_str):
+            if reverse_target_str[reverse_target_idx] != total_str[total_idx-reverse_target_idx]:
+                break
+            reverse_target_idx += 1
+        if reverse_target_idx == len(reverse_target_str):
+            is_find = True
+    else:
+        while reverse_target_idx < len(reverse_target_str):
+            if s[reverse_target_str] == total_str[total_idx]:
+                next_idx = min(reverse_target_idx, next_idx)
+                break
+            reverse_target_idx += 1
+    if is_find:
+        break
+
+    total_idx += next_idx
 ```
