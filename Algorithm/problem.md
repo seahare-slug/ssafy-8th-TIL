@@ -68,6 +68,15 @@
 
 #
 
+- 2차원 배열 출력
+  - 언패킹을 이용해서 한 줄씩 출력 가능
+    - ```python
+      for row in pad:
+        print(*row)
+      ```
+
+#
+
 - 가로, 세로 방향의 탐색
   - 가로 방향 탐색
     - ```python
@@ -81,3 +90,40 @@
           for j in range(number_of_row):
             pad[j][i]
       ```
+
+#
+
+- 특정 규칙이 있는 배열 탐색
+
+  - 배열을 탐색하는 순서가 단순히 가로 세로 정도가 아닌 규칙이 있을 때
+  - `현재위치 [ci, cj], 다음위치 [ni, nj], 위치사이의 규칙 [1, 0, -1, 0]`
+  - `다음위치 = 현재위치 + 위치사이의 규칙`
+  - 다음위치의 존재 여부도 조건문을 통해 확인할 수 있다.
+  - ex) 달팽이 숫자
+
+    ```python
+    pad = [[0] * pad_size for _ in range(pad_size)]
+
+    # 규칙 선언
+    di = [0, 1 ,0 ,-1]
+    dj = [1, 0 ,-1 ,0]
+    d_idx = 0
+
+    ci = 0
+    cj = 0
+    ni = 0
+    nj = 0
+
+    for num in range(1, pad_size**2 + 1):
+        pad[ci][cj] = num
+        # 다음위치 = 현재위치 + 규칙
+        ni = ci + di[d_idx]
+        nj = cj + dj[d_idx]
+        # 다음위치가 범위를 벗어나거나 값을 다 채웠으면 다음규칙 준비
+        if ni < 0 or ni >= pad_size or nj < 0 or nj >= pad_size or pad[ni][nj] != 0:
+            # 다음규칙으로 업데이트
+            d_idx = (d_idx + 1) % len(di)
+        # (다음규칙이 바뀌었으면 바뀐 규칙으로) 현재위치를 업데이트
+        ci += di[d_idx]
+        cj += dj[d_idx]
+    ```
