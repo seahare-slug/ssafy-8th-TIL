@@ -1,8 +1,16 @@
+### 코딩테스트
+
+- 변화하는 것에 대해 규칙 찾기(**점화식** 찾기)
+- 탐색, 예외, 조건 등의 **범위 확인**하기
+- 문제에 주어진 범위에 따라 **빈 배열**을 먼저 선언할지 말지
+
 ### 문제별 해결법
 
 ---
 
 1. [소수 구하가](#소수-구하기)
+2. [부분 집합](#부분집합의-개수)
+3.
 
 ---
 
@@ -30,7 +38,7 @@
   m = int((n + 1) ** (1/2)) # 소수 판별은 제곱근까지
   for i in range(2, m + 1):
     if che[i]:
-      for j in range(2 * i, n + 1, i): # 그 값의 배수들은 전부 False로 바꿔줌
+      for j in range(2 * i, n + 1, i): # 값 자신을 제외한 배수들은 전부 False로 바꿔줌
         che[j] = False
   ```
 
@@ -46,3 +54,30 @@
 ```python
 1 << n # n의 개수만큼 비트연산
 ```
+
+#
+
+#### 2차원 배열
+
+- 2차원 배열의 선언
+  - 단순 연산자로만 선언하면 1차원 배열이 여러개 복사가 됨(얕은 복사)
+    - `([0] * n) * m`
+  - 2차원 배열부터는 1차원 배열을 반복문을 통해 여러번 선언 해줘야함
+    - `[0] * n for _ in range(m)`
+    - `[0 for _ in range(n)] for _ in range(m)]`
+
+#
+
+- 가로, 세로 방향의 탐색
+  - 가로 방향 탐색
+    - ```python
+      for i in range(number_of_row):
+        for j in range(number_of_col):
+          pad[i][j]
+      ```
+  - 세로 방향 탐색
+    - ```python
+        for i in range(number_of_col):
+          for j in range(number_of_row):
+            pad[j][i]
+      ```
