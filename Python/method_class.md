@@ -143,9 +143,10 @@ class Person:
 
     def talk(self, content):
         self.content = content
-        self.revise_content(self.content)  # 스태틱 메소드도 마찬가지로 인스턴스의 메소드로서 실행됨
-                                           # 물론 class.메소드명 으로 실행하도 가능은 하지만
-                                           # 인스턴스 메소드 안에서는 인스턴스를 객체로 쓰는 것이 원칙
+        self.revise_content(self.content)
+        # 스태틱 메소드도 마찬가지로 인스턴스의 메소드로서 실행됨
+        # 물론 class.메소드명 으로 실행하도 가능은 하지만
+        # 인스턴스 메소드 안에서는 인스턴스를 객체로 쓰는 것이 원칙
     @staticmethod
     def revise_content(content):
         return content + "something"
