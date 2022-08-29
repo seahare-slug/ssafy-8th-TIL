@@ -1,4 +1,4 @@
-## Class와 Method
+# Class와 Method
 
 ---
 
