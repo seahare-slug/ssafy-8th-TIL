@@ -111,3 +111,47 @@ urlpatterns = [
 
   - view 함수들이 정의 되는 곳
   - MTV 패턴에서 "V"
+
+#
+
+## DTL(Django Template Language)
+
+- **Variable**
+
+  - 밑줄로 시작할 수 없음
+  - "dot(.)"을 사용해서 변수 속성에 접근 가능
+  - 일반적으로 render 함수의 3번째 인자를 통해서 view에서 넘겨 줌
+  - html에 표기할 때는 {{}} 형태로 괄호 안에서 해당 속성이나 변수에 접근하여 표시
+
+  ```html
+  <h1>hello {{info.name}}</h1>
+  ```
+
+- **Filters**
+
+  - 표시할 변수를 수정할 때 사용
+  - 약 60개 정도의 기능이 있음
+  - html에 표기할 때 변수 뒤에 "|"를 붙여서 사용
+
+  ```html
+  <h1>hello {{info.name|lower}}</h1>
+  ```
+
+- **Tags**
+
+  - 반복 또는 논리를 수행하여 제어 흐름을 만드는 등 변수보다 복잡한 일들 수행
+  - 약 24개의 기능을 제공
+
+  ```html
+  <ul>
+    {% for food in foods %}
+    <li>{{food}}</li>
+    {% endfor %}
+  </ul>
+  ```
+
+- **Comments**
+  - 주석 표현
+  ```html
+  {# 이것은 주석입니다. #}
+  ```
