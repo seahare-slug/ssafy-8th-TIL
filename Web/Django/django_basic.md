@@ -114,6 +114,10 @@ urlpatterns = [
 
 #
 
+> **APP 코드 작성은 URL(urls.py) -> View(views.py) -> Template(templates > html파일) 순서로 작성**
+
+#
+
 ## DTL(Django Template Language)
 
 - **Variable**
