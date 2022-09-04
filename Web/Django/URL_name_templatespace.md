@@ -35,15 +35,20 @@ urlpatterns = [
 {% url 'index' %} ----> {% url 'apps1:index' %}
 ```
 
+#
+
 ## Templatespace
 
 ---
 
 - Django는 기본적으로 settings.py의 INSTALLED_APPS에 작성된 app 순서대로 template를 검색함
 - url에 직접 주소를 입력시 **template를 기준**으로 일치하는지 보기 때문에 template의 **상위 경로가 달라도** 맞다고 판단
-  > Q 원래 경로는 apps2/templates/index/인데 templates는 생략가능?
+- `http://127.0.0.1:8000/apps2/index/`를 찾고 싶지만 apps1이 먼저 등록이 돼 있다면 `apps1/index/`에서 index를 찾았다고 판단해 apps1의 페이지가 출력됨
 - 따라서 template 하위에 각 앱의 이름으로 폴더를 한번 더 생성 후 그 안에 html 파일들을 보관
 
 ```
 apps1/templates/index.html ----> apps1/templates/apps1/index.html
 ```
+
+> Q. 원래 경로는 apps2/templates/index/인데 왜 url에서는 templates를 안 쓰는지?
+> A. 위의 경로는 urlpattern을 따른 것임
