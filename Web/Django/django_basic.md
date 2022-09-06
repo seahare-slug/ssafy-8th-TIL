@@ -159,3 +159,10 @@ urlpatterns = [
   ```html
   {# 이것은 주석입니다. #}
   ```
+
+#
+
+### render vs redirect
+
+- `render`: 템플릿을 불러와서 렌더링
+- `redirect`: 해당 URL로 이동
