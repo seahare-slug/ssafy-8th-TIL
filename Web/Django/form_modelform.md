@@ -54,7 +54,16 @@ from django import forms
 from .models import 모델명
 
 class FormName(forms.ModelForm):
-
+	# form처럼 위젯을 추가할 수도 있음
+	title = forms.CharField(
+		label="제목",
+		widget=forms.TextInput(
+			attrs={
+				"class": "my-title",
+				"placeholder": "Enter the title",
+			}
+		),
+	)
 	class Meta:
 		model = 모델명
 		# 모델의 모든 필드 포함
