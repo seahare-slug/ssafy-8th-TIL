@@ -166,3 +166,8 @@ urlpatterns = [
 
 - `render`: 템플릿을 불러와서 렌더링
 - `redirect`: 해당 URL로 이동
+
+### Handling HTTP requests
+
+- 구현 목적이 겹치지만 HTTP request의 종류가 달라 함수를 각각 구현한 경우
+- 하나의 함수로 합치고 `request.method == "POST"`형식의 조건문으로 request의 종류를 판별해 각각 실행할 내용을 적어줄 수 있음
