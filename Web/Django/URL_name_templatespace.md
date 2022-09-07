@@ -52,3 +52,5 @@ apps1/templates/index.html ----> apps1/templates/apps1/index.html
 
 > Q. 원래 경로는 apps2/templates/index/인데 왜 url에서는 templates를 안 쓰는지?
 > A. 위의 경로는 urlpattern을 따른 것임
+
+> Q. 그냥 원래 디렉토리 경로를 넣으면 안 되게 막혀져있음? articles/templates/articles/index.html
