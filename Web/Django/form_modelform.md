@@ -70,12 +70,53 @@ from .forms import FormName
 
 def function1(request):
 	# 사용자에게 받은 입력값
-	form_name = FormName(request.POST)
+	form_instance = FormName(request.POST)
 	# ModelForm은 클래스 정의시 CharField를 사용하지 않고
 	# 이미 있는 model을 전달 받아서
 	# 입력값에 대해서 is_valid로 유효성 검사 필요
-	if form_name.is_valid():
-		form_instance = form_name.save()
-		return redirect("성공시 이동할 url", form_instance.pk)
+	if form_instance.is_valid():
+		target_data = form_instance.save()
+		return redirect("성공시 이동할 url", target_data.pk)
 	return redirect("실패시 이동할 url")
 ```
+
+#
+
+### Form 의 save 메서드
+
+- ModelForm을 통해 인스턴스를 생성할 때 인자에 따라 생성과 업데이트를 선택 가능
+
+```python
+# CREATE
+# 입력 값을 새로 받아 저장할시 새로운 데이터베이스 객체를 만들고 인스턴스를 저장
+form_instance = FormName(request.POST)
+form_instance.save()
+
+# UPDATE
+# 인스턴스를 입력 받으면 입력 값을 제공 받은 인스턴스에 저장
+form_instance = FormName(request.POST, instance=instance_name)
+form_instance.save()
+```
+
+### Form 의 errors 속성
+
+- `is_valid()`가 False인 경우 form 인스턴스의 errors 속성에 값이 작성 되기 때문에 유효성 검증 실패 시, 이를 조회 가능
+
+```python
+def function1(request):
+	...
+	if form_instance.is_valid():
+		...
+	else:
+		print(f"에러: {form_instance.errors}")
+```
+
+## Form과 ModelForm의 차이
+
+- Form
+
+  - forms.py에 직접 필드를 만들어서 쓰기 때문에 데이터가 DB 필드에 저장되는 것이 아님
+  - 단순히 특정 데이터의 유효성 검증만 필요로 할 때
+
+- ModelForm
+  - Models.py의 필드를 직접 가져와서 쓰기 때문에 입력 받은 것을 유효성 검사가 끝나고 DB 필드에 바로 저장할 수 있음
