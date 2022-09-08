@@ -79,3 +79,10 @@ urlpatterns = [
 # name='hello'에 해당하는 urlpatterns의 절대경로를 반환
 {% url 'hello' %}
 ```
+
+#
+
+# Q n A
+
+> Q. urlpatterns 에 등록된 경로 말고 원래 파일 구성에 따른 경로 접근은 왜 안 되는지?
+> A. 설계된 로직대로 접근할 수 있도록 urlpatterns 에 등록 돼 있지 않은 경로는 접근하지 못하게 Django에서 막어놓음

@@ -165,7 +165,7 @@ urlpatterns = [
 ### render vs redirect
 
 - `render`: 템플릿을 불러와서 렌더링
-- `redirect`: 해당 URL로 이동
+- `redirect`: 해당 URL로 이동 (즉, url에 해당하는 함수 호출도 일으킴)
 
 ### Handling HTTP requests
 

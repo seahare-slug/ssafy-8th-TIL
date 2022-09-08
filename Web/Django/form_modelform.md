@@ -129,3 +129,10 @@ def function1(request):
 
 - ModelForm
   - Models.py의 필드를 직접 가져와서 쓰기 때문에 입력 받은 것을 유효성 검사가 끝나고 DB 필드에 바로 저장할 수 있음
+
+#
+
+# Q n A
+
+> Q. modelForm의 장점이 model의 필드를 그대로 받아서 DB에 관여하기 용이한 것인데 widget으로 필드를 따로 추가해버려도 되는 것인지?
+> A. wigdet은 실제 필드에는 영향을 주지 않고 input의 형태만 바꿔줄 뿐, 그 input 값으로 실제 DB에 영향을 주는 것은 차후 데이터 처리와 관련 있음
