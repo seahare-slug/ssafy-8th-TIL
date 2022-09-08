@@ -24,8 +24,8 @@ class SomeModel(models.Model):
 ```
 
 - `DateTimeField`: 날짜 및 시간(datetime.datetime)을 값으로 사용하는 필드
-  - `auto_now_add`: 최초 생성 일자
-  - `auto_now`: 최종 수정 일자
+- `auto_now_add`: 최초 생성 일자
+- `auto_now`: 최종 수정 일자
 
 ### 모델 생성
 
