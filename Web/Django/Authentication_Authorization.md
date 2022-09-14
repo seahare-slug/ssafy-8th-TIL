@@ -66,3 +66,130 @@
 
   admin.site.register(User, UserAdmin)
   ```
+
+#
+
+## Django Session
+
+- Django는 _database-backed sessions_ 저장 방식을 기본 값으로 사용
+- session 정보를 Django DB의 django_session 테이블에 저장
+- 설정을 통해 다른 저장방식으로 변경 가능
+- Django는 form에서처럼 session도 많은 부분을 고려하지 않아도 되게끔 도움을 줌
+
+#
+
+## 로그인 기능 만들기
+
+### Login
+
+- 로그인은 Session을 만드는(Create) 과정
+
+```python
+# accounts/urls.py
+
+from django.urls import path
+from . import views
+
+app_name = "accounts"
+urlpatterns = [
+  path("login/", views.login, name="login"),
+]
+```
+
+```python
+# accounts/views.py
+from django.contrib.auth.forms import AutenticationForm
+# 내가 정의한 login 함수와 이름이 겹치지않게 auth_login으로 지정
+# 로그인 하고자하는 사용자 정보를 입력 받음
+# 기본적으로 username과 password가 유효한지 검증
+# request를 첫번째 인자로 받음
+from django.contrib.auth import login as auth_login
+
+def login(request):
+  if request.method == "POST":
+    authentication_form = AuthenticationForm(request, request.POST)
+    if authentication_form.is_valid():
+      auth_login(request, authentication_form.get_user())
+      return redirect("articles:index")
+
+  else:
+    # render를 위한 form 출력
+    authentication_form = AuthenticationForm()
+  context = {
+    "authentication_form": authentication_form,
+  }
+  return render(request, "accounts/login.html", context)
+```
+
+```html
+<!-- accounts/login.html -->
+{% extends "base.html" %} {% block content %}
+
+<h1>로그인</h1>
+<!-- 로그인 데이터로 로그인 요청을 보내기 위한 코드 -->
+<form action="{% url 'accounts:login' %}" method="POST">
+  {% csrf_token %} {{ form.as_p }}
+  <input type="submit" />
+</form>
+{% endblock content %}
+```
+
+```html
+<!-- base.html -->
+...
+<h1>Hello</h1>
+<!-- 단순이 로그인 페이지로 가기위한 코드(render) -->
+<a href="{% url 'accounts:login' %}">Login</a>
+...
+```
+
+### 로그인 돼 있는 유저 정보
+
+- `{{ user }}`를 통해 출력 가능
+- 어떻게 context로 넘겨주는 과정 없이 바로 user를 쓸 수 있을까?
+  - *settings.py*의 context processors 설정 값 때문에 template에 기본 적으로 변수가 포함됨
+- `django.contrib.auth.context_processors.auth`에 포함
+- 로그인하지 않은 경우에는 `AnonymousUser`로 출력
+
+### Logout
+
+- 로그아웃은 Session을 삭제(Delete)하는 과정
+
+```python
+# accounts/urls.py
+
+from django.urls import path
+from . import views
+
+app_name = "accounts"
+urlpatterns = [
+  path("login/", views.login, name="login"),
+  path("login/", views.logout, name="logout"),
+]
+```
+
+```python
+# accounts/views.py
+# 내가 정의한 login 함수와 이름이 겹치지않게 auth_login으로 지정
+# 로그인 하고자하는 사용자 정보를 입력 받음
+# 기본적으로 username과 password가 유효한지 검증
+# request를 첫번째 인자로 받음
+from django.contrib.auth import logout as auth_logout
+
+def logout(request):
+  auth_logout(request)
+  return redirect("article:index")
+```
+
+```html
+<!-- base.html -->
+...
+<h1>Hello</h1>
+<form action="{% url 'accounts:logout' %}" method="POST">
+  {% csrf_token %}
+  <input type="submit" value="Logout" />
+</form>
+...
+```
+
+### Sign In
