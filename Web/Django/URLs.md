@@ -5,16 +5,25 @@
 - url에 변수를 대입해서 url에 따라 다른 결과를 나오게 하고 싶을 때
 - 기본 타입은 string이고 총 5개 타입이 존재 (str, int, slug, uuid, path)
 
+```html
+<!-- hello.html으로 접근할 수 있는 파일 -->
+
+<!-- 이동 링크를 통해서 name 변수에 값을 전달 -->
+<a href="{% url 'hello' name=instance.name %}">이동</a>
+```
+
 ```python
 # urls.py
-# hello뒤에 오는 url에 원하는 name을 넣으면 views.hello 함수의 인자로 전달 시킬 수 있음
+
+# name이라는 이름으로 전달 받은 변수를 url에 참조하고 views.hello 함수의 인자로 전달
 urlpatterns = [
-	path('hello/<name>/', views.hello),
+	path('hello/<str:name>/', views.hello),
 ]
 ```
 
 ```python
 # articles/views.py
+
 # url 변수로 받은 인자를 받아서 template로 랜더링
 def hello(request, name):
 	context = {
@@ -23,13 +32,12 @@ def hello(request, name):
 	return render(request, 'hello.html', context)
 ```
 
-```python
-# airtlcels/tempaltes/hello.html
-# hello 함수에서 랜더링할 html에 name을 전달받아 표시
-{% extends 'base.html' %}
+```html
+<!-- airtlcels/tempaltes/hello.html -->
 
-{% block content %}
-	<h1> 안녕하세요 {{name}} 님 </h1>
+<!-- hello 함수에서 랜더링할 html에 name을 전달받아 표시 -->
+{% extends 'base.html' %} {% block content %}
+<h1>안녕하세요 {{name}} 님</h1>
 {% endblock %}
 ```
 
@@ -75,8 +83,8 @@ urlpatterns = [
 - Built-in tag "url"
 - 주어진 urlpatterns의 이름 또는 선택적 매개변수의 절대 경로 주소를 반환
 
-```python
-# name='hello'에 해당하는 urlpatterns의 절대경로를 반환
+```html
+<!-- name='hello'에 해당하는 urlpatterns의 절대경로를 반환 -->
 {% url 'hello' %}
 ```
 
