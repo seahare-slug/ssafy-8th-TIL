@@ -83,6 +83,7 @@
 ### Login
 
 - 로그인은 Session을 만드는(Create) 과정
+- `AutenticationForm`이라는 form을 사용
 
 ```python
 # accounts/urls.py
@@ -192,4 +193,58 @@ def logout(request):
 ...
 ```
 
-### Sign In
+### Sign Up
+
+- User를 만드는(Create) 것
+- `UserCreationForm`라는 ModelForm을 사용
+  - 3개의 필드를 가짐
+    - 1. `username` User Model에서 상속
+    - 2. `password1` widget
+    - 3. `password2` widget
+
+```python
+# accounts.py
+
+app_name = "accounts"
+urlpatterns = [
+  ...,
+  path("signup/", views.signup, name="signup"),
+]
+```
+
+```python
+# accounts/views.py
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+
+def signup(request):
+  if request.method == "POST":
+    userCreation_form = UserCreationForm(request.POST)
+    if userCreation_form.is_valid():
+      userCreation_form.save()
+      return redirect("articles:index")
+  else:
+    userCreation_form = UserCreationForm()
+  context = {
+    "userCreation_form": userCreation_form,
+  }
+  return render(request, "accounts/signup.html", context)
+```
+
+```html
+<!-- signup.html -->
+...
+<!-- 회원가입 내용을 작성하고 요청을 보내기 위한 페이지 -->
+<h1>회원가입</h1>
+<form action="{% url 'accounts:signup' %}" method="POST">
+  {% csrf_token %} {{ form.as_p }}
+  <input type="submit" />
+</form>
+...
+```
+
+```html
+<!-- base.html -->
+...
+<a href="{% url 'accounts:signup' %}">Sign Up</a>
+...
+```
