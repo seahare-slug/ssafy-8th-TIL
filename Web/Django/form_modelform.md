@@ -15,7 +15,7 @@
 # 앱/forms.py
 from django import forms
 
-class FormName(forms.form):
+class FormName(forms.Form):
 	title = forms.CharField(max_length=10)
 	content = forms.CharField()
 ```
@@ -28,6 +28,8 @@ class FormName(forms.form):
 from .forms import FormName
 
 def function1(request):
+	# form이어도 form을 정의할 때 선언된게 아니라 외부적으로 따로 입력을 받는다면 request.POST를 인자로 받을 수 있음
+	# form_name = FormName(request.POST)
 	form_name = FormName()
 	context = {
 		'form_name': form_name,
