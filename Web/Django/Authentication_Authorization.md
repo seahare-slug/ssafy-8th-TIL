@@ -214,21 +214,56 @@ urlpatterns = [
 
 ```python
 # accounts/views.py
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, #UserCreationForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 def signup(request):
   if request.method == "POST":
-    userCreation_form = UserCreationForm(request.POST)
+    # userCreation_form = UserCreationForm(request.POST)
+    userCreation_form = CustomUserCreationForm(request.POST)
     if userCreation_form.is_valid():
       userCreation_form.save()
       return redirect("articles:index")
   else:
-    userCreation_form = UserCreationForm()
+    # userCreation_form = UserCreationForm()
+    userCreation_form = CustomUserCreationForm()
   context = {
     "userCreation_form": userCreation_form,
   }
   return render(request, "accounts/signup.html", context)
 ```
+
+UserCreationForm은 커스텀 User 모델을 사용하는 것이 아닌 기본으로 제공되는 User 모델을 사용하기 때문에 상속 받는 모델을 수정해줘야함
+
+- 커스텀 User 모델을 사용하려면 다시 작성하거나 확장해야하는 Form
+  - `UserCreationForm`
+  - `UserChangeForm`
+- 기존 User 모델을 참조하지 않는 Form**(AbstractBaseUser의 모든 subclass와 호환됨)**
+  - `AuthenticationForm`
+  - `SetPasswordForm`
+  - `PasswordChangeForm`
+  - `AdminPasswordChangeForm`
+
+```python
+# accounts/forms.py
+
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+
+class CustomUserCreationForm(UserCreationForm):
+
+  class Meta(UserCreationForm.Meta):
+    model = get_user_model()
+
+class CustomUserChangeForm(UserChangeForm):
+
+  class Meta(UserChangeForm.Meta):
+    model = get_user_model()
+```
+
+- `get_user_model()`
+  - 현재 프로젝트에서 활성화된 사용자 모델(active user model)을 반환
+  - model에 User클래스를 직접 참조하는 대신 `get_user_model`을 사용해서 참조하라고 명시
 
 ```html
 <!-- signup.html -->
