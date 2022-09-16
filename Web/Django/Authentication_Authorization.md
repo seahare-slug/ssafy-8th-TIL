@@ -144,6 +144,8 @@ def login(request):
 ...
 ```
 
+#
+
 ### 로그인 돼 있는 유저 정보
 
 - `{{ user }}`를 통해 출력 가능
@@ -151,6 +153,8 @@ def login(request):
   - *settings.py*의 context processors 설정 값 때문에 template에 기본 적으로 변수가 포함됨
 - `django.contrib.auth.context_processors.auth`에 포함
 - 로그인하지 않은 경우에는 `AnonymousUser`로 출력
+
+#
 
 ### Logout
 
@@ -193,6 +197,8 @@ def logout(request):
 ...
 ```
 
+#
+
 ### Sign Up
 
 - User를 만드는(Create) 것
@@ -219,16 +225,19 @@ from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 def signup(request):
   if request.method == "POST":
-    # userCreation_form = UserCreationForm(request.POST)
-    userCreation_form = CustomUserCreationForm(request.POST)
-    if userCreation_form.is_valid():
-      userCreation_form.save()
+    # user_creation_form = UserCreationForm(request.POST)
+    user_creation_form = CustomUserCreationForm(request.POST)
+    if user_creation_form.is_valid():
+      # 회원가입 후 바로 로그인 시키기
+      # user_creation_form.save()
+      new_user = user_creation_form.save()
+      auth_login(request, new_user)
       return redirect("articles:index")
   else:
-    # userCreation_form = UserCreationForm()
-    userCreation_form = CustomUserCreationForm()
+    # user_creation_form = UserCreationForm()
+    user_creation_form = CustomUserCreationForm()
   context = {
-    "userCreation_form": userCreation_form,
+    "user_creation_form": user_creation_form,
   }
   return render(request, "accounts/signup.html", context)
 ```
@@ -283,3 +292,109 @@ class CustomUserChangeForm(UserChangeForm):
 <a href="{% url 'accounts:signup' %}">Sign Up</a>
 ...
 ```
+
+#
+
+### Delete
+
+- 회원 탈퇴는 DB에서 User를 삭제하는 것
+
+```python
+# accounts/urls.py
+
+app_name = "accounts"
+urlpatterns = [
+  ...,
+  path("delete/", views.delete, name="delete"),
+]
+```
+
+```python
+# accounts/views.py
+
+def delete(request):
+  # 현재 로그인 돼 있는 유저를 삭제하기 때문에
+  # 따로 어떤 유저인지 정보를 받을 필요가 없음
+  request.user.delete()
+  # 탈퇴하고 난 후에 로그아웃을 통해 유저의 세션정보도 삭제
+  auth_logout(request)
+  return redirect("articles:index")
+```
+
+```html
+<!-- base.html -->
+
+...,
+<form action="{% url 'accounts:delete' %}" method="POST">
+  {% csrf_token %}
+  <input type="submit" value="회원탈퇴" />
+</form>
+```
+
+#
+
+### Update
+
+- 회원정보 수정은 User의 내용을 Update 하는 것
+- `UserChangeForm` 사용
+
+```python
+# accounts/urls.py
+
+urlpatterns = [
+  ...,
+  path("update/", views.update, name="update"),
+]
+```
+
+```python
+# accounts/views.py
+
+def update(request):
+  if request.method == "POST":
+    custom_user_change_form = CustomUserChangeForm(request.POST, instance=request.user)
+    if custom_user_change_form.is_valid():
+      custom_user_change_form.save()
+      return redirect("articles:index")
+  else:
+    custom_user_change_form = CustomUserChangeForm(instance=request.user)
+  context = {
+    "custom_user_change_form": custom_user_change_form,
+  }
+  return render(request, "accounts/update.html", context)
+```
+
+```html
+<!-- accounts/update.html -->
+
+...
+<h1>회원정보 수정</h1>
+<form action="{% url 'accounts:update' %}" method="POST">
+  {% csrf_token %} {{ form.as_p }}
+  <input type="submit" />
+</form>
+```
+
+```html
+<!-- base.html -->
+...
+<a href="{% url 'accounts:update' %}">회원정보 수정 페이지</a>
+```
+
+현재 상태에서는 일반 유저가 변경하면 안 되는 정보까지 수정이 가능하기 때문에 커스텀 user 모델에서 modelForm으로부터 상속받는 내용을 수정해줘야함
+
+```python
+# accounts/forms.py
+
+class CustomUserChangeForm(UserChangeForm):
+
+  class Meta(UserChangeForm.Meta):
+    model = get.user_model()
+    # 상속받는 필드 명시
+    # UserChangeForm의 기존 제공 필드명들은 github 공식문서에서 확인 가능
+    fields = ("email", "first_name", "last_name")
+```
+
+#
+
+### Change Password
