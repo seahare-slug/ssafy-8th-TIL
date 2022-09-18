@@ -398,3 +398,44 @@ class CustomUserChangeForm(UserChangeForm):
 #
 
 ### Change Password
+
+- 이전 비밀번호를 입력하여 비밀번호 변경
+- `SetPasswordForm`(이전 비밀번호를 입력하지 않고 비밀번호 변경)을 상속받아 사용
+
+```python
+# accounts/url.py
+
+app_name = "accounts"
+urlpatterns = [
+  ...,
+  path("password/", views.change_password, name="change_password"),
+]
+```
+
+```python
+# accounts/views.py
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+
+def change_password(request):
+  if request.method == "POST":
+    password_change_form = PasswordChangeForm(request.uesr, request.POST)
+    if password_change_form.is_valid():
+      password_change_form.save()
+      return redirect("articles:index")
+  else:
+    password_change_form = PasswordChangeForm(request.uesr)
+  context = {
+    "password_change_form": password_change_form,
+  }
+  return render(request, "accounts/change_password.html", context)
+```
+
+```html
+<!-- accounts/change_password.html -->
+
+...,
+<form action="{% url 'accounts:change_password' %}" method="POST">
+  {% csrf_token %} {{ form.as_p }}
+  <input type="submit" />
+</form>
+```
