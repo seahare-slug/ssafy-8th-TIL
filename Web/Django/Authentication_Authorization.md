@@ -439,3 +439,63 @@ def change_password(request):
   <input type="submit" />
 </form>
 ```
+
+### 로그인 사용자에 대해 접근 제한하기
+
+1. `is_authenticated` attribute (the raw way)
+
+- 권한(permission)과는 관련 없으며, 사용자의 상태나 세션에 대해서도 확인하지 않음
+- User model의 속성
+- 모든 User 인스턴스에 대해 항상 True인 읽기 전용 속성
+- AnonymousUser에 대해서는 항상 False
+
+```html
+<!-- 로그인과 비로그인 상태에서 출력되는 화면 다르게 표시하기 -->
+<!-- 하지만 비로그인 상태에서도 url를 직접 입력하면 로그인 사용자의 페이지로 갈 수 있음 -->
+{% if request.user.is_authenticated %} ..., {% else %}
+<a href="{% url `accounts:login` %}">Login</a>
+<a href="{% url `accounts:signup` %}">Sign Up</a>
+{% endif %}
+```
+
+2. `login_required` decorator
+
+- 사용자가 로그인 되어 있으면 정상적으로 view 함수 실행
+- 로그인 하지 않은 사용자의 경우 settings.py의 LOGIN_URL 문자열 주소로 redirect
+  - LOGIN_URL의 기본 값은 "/accounts/login"
+  - app의 이름을 accounts로 한 이유 중 하나
+  - 인증 성공 시 redirect 되어야하는 경로는 "next"라는 쿼리 문자열 매개변수로 저장
+
+```python
+# accounts/views.py
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def something_needed_login(request):
+  pass
+```
+
+- "next" 쿼리 문자열 매개변수를 처리하는 방법
+
+```python
+# accounts/views.py
+
+def login(request):
+...,
+  return redirect(request.GET.get('next') or 'articles:index')
+```
+
+#### 두 데코레이터(@login_required, @require_POST)로 인해 발생하는 구조적인 문제
+
+1. 비 로그인 상태로 게시글 삭제 시도
+2. delete 함수의 @login_required로 인해 로그인 페이지로 redirect
+   *http://127.0.0.1:8000/accounts/login/?next=/articles/1/delete/*
+3. redirect로 이동한 로그인 페이지에서 로그인 진행
+4. delete 함수의 @require_POST로 인해 에러 발생
+   로그인 성공 이후 GET method로 next 파라미터 주소에 redirect되기 때문
+
+#### 해결방안
+
+- `@login_required`는 GET request method를 처리할 수 있는 view 함수에서만 사용해야함
+- POST method만 허용하는 delete같은 함수는 내부에서 `is_authenticated` 속성 값을 사용해서 처리
