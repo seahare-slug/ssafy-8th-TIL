@@ -30,6 +30,43 @@ def Power_of_2(k):
 
 #
 
+> **재귀를 이용한 여러가지 리턴(합) 전달**
+
+```python
+number_of_testcase = int(input())
+
+# total을 과정마다 변수로 선언하면 함수 호출시 초기화되거나
+# 전역으로 선언해도 과정끼리 같은 전역 total 변수를 참조해버림
+# total을 인자로 전달하여 경로에 따른 합을 구할 수 있음
+def find_min_route(x, y, total):
+    global N
+    if x == N and y == N:
+        sum.append(total + pad[N][N])
+        # 결과를 전역 배열에 저장하면 return 생략가능
+        # return
+    elif pad[x][y + 1] == 11:
+        find_min_route(x + 1, y, total + pad[x][y])
+    elif pad[x + 1][y] == 11:
+        find_min_route(x, y + 1, total + pad[x][y])
+    else:
+        find_min_route(x, y + 1, total + pad[x][y])
+        find_min_route(x + 1, y, total + pad[x][y])
+
+for test in range(1, number_of_testcase + 1):
+    N = int(input())
+    pad = [[11] * (N + 2)]
+    for i in range(N):
+        pad.append([11] + list(map(int, input().split())) + [11])
+    total = 0
+    sum = []
+    pad.append([11] * (N + 2))
+
+    find_min_route(1, 1, total)
+    print(f"#{test} {min(sum)}")
+```
+
+#
+
 > **선택정렬에 대한 재귀와 반복**
 
 ```python
