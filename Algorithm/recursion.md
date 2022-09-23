@@ -30,28 +30,27 @@ def Power_of_2(k):
 
 #
 
-> **조합에 대한 재귀**
+> **모든 조합에 대한 재귀**
 
 ```python
-def top(idx, h):
-    global minV
-    # B와 크거나 같고 최소값보다 작은 경우에만 갱신
-    if B <= h < minV:
-        minV = h
-    # N개 완료 - 종료
+def combi_all(idx, empty_list):
+    # N은 목적 배열의 길이
     if idx == N:
-        return
-    top(idx + 1, h)  # 키 포함x
-    top(idx + 1, h + height[idx])  # 키 포함
+        result.append(combi_list)
+    combi_all(idx + 1, combi_list)  # 현재 위치 값 포함 x
+    combi_all(idx + 1, combi_list + [current_value])  # 현재 위치 값 포함 o
 ```
 
-> **부분집합에 대한 재귀**
+> **부분집합(조합)에 대한 재귀**
 
 ```python
 arr = [1, 2, 5, 3, 8, 6]
 n = len(arr)
 
+# 부분집합의 개수는 n^2개
 for i in range(0, (1 << n)):
+    # i의 값에 해당하는 비트와 비트의 위치에 해당하는 배열의 값으로 조합
+    # 값이 다르면 당연히 비트도 다르기 때문에 가능
     for j in range(0, n):
         if i & (1 << j):
             print(arr[j], end="")
