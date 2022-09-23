@@ -30,6 +30,36 @@ def Power_of_2(k):
 
 #
 
+> **조합에 대한 재귀**
+
+```python
+def top(idx, h):
+    global minV
+    # B와 크거나 같고 최소값보다 작은 경우에만 갱신
+    if B <= h < minV:
+        minV = h
+    # N개 완료 - 종료
+    if idx == N:
+        return
+    top(idx + 1, h)  # 키 포함x
+    top(idx + 1, h + height[idx])  # 키 포함
+```
+
+> **부분집합에 대한 재귀**
+
+```python
+arr = [1, 2, 5, 3, 8, 6]
+n = len(arr)
+
+for i in range(0, (1 << n)):
+    for j in range(0, n):
+        if i & (1 << j):
+            print(arr[j], end="")
+    print()
+```
+
+#
+
 > **재귀를 이용한 여러가지 리턴(합) 전달**
 
 ```python
