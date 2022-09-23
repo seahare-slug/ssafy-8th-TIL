@@ -66,6 +66,15 @@
   - 2차원 배열부터는 1차원 배열을 반복문을 통해 여러번 선언 해줘야함
     - `[0] * n for _ in range(m)`
     - `[0 for _ in range(n)] for _ in range(m)]`
+    - 2차원 배열을 입력 받을 때 반복문으로 받게 되면 평소 알던 좌표축 x,y축이 바뀌어서 저장됨
+      ```python
+      # input
+      # 123
+      # 456
+      # 789
+      pad = [list(map(int, input())) for i in range(3)]
+      # 가로 행이 x축이 되고 세로 열이 y축이 됨
+      ```
 
 #
 
