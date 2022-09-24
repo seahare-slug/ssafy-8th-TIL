@@ -4,8 +4,9 @@
 - 일반적으로 재귀적 알고리즘은 반복(Iterative) 알고리즘보다 더 많은 메모리와 연산을 필요로 하기 때문에
 - 입력 값이 커질수록 재귀는 비 효율적일 수 있다.
 - 추상 자료형(list, tree 등)의 구현은 재귀가 간단하고 자연스러운 경우가 많다.
+- 재귀 함수에 배열을 인자로 주게 되면 각 함수에서 같은 배열을 참조해버릴 수 있기 때문에 유의(shallow copy)
 
-> **2^k^ 연산에 대한 재귀(recursion)와 반복(iteration)**
+> **2^k^ 연산에 대한 반복(iteration)과 재귀(recursion)**
 
 ```python
 # Iteration
@@ -71,7 +72,8 @@ def find_min_route(x, y, total):
     global N
     if x == N and y == N:
         sum.append(total + pad[N][N])
-        # 결과를 전역 배열에 저장하면 return 생략가능
+        # 결과를 전역 배열에 저장하면 return 생략가능 대신 else문 필요
+        # return은 종료의 의미
         # return
     elif pad[x][y + 1] == 11:
         find_min_route(x + 1, y, total + pad[x][y])
@@ -96,7 +98,7 @@ for test in range(1, number_of_testcase + 1):
 
 #
 
-> **선택정렬에 대한 재귀와 반복**
+> **선택정렬에 대한 반복과 재귀**
 
 ```python
 # Iteration
