@@ -42,12 +42,13 @@ def Power(power, N):
 
 ```python
 # 분할 과정
+# 반반씩 계속하여 분할
 def merge_sort(arr):
 	if len(arr) == 1:
 		return arr
 	left = []
 	right = []
-	middle = len(arr) // 2 + 1
+	middle = len(arr) // 2
 
 	for i in range(middle):
 		left.append(arr[i])
@@ -62,6 +63,8 @@ def merge_sort(arr):
 
 ```python
 # 병합 과정
+# 단위끼리 합치면서 젤 앞의 값부터 비교하며
+# 작은 값부터 빼내며 새로운 배열에 정렬
 def merge(left, right):
 	result = []
 
@@ -69,7 +72,7 @@ def merge(left, right):
 		if len(left) > 0 and len(right) > 0:
 			if left[0] <= right[0]:
 				result.append(left.pop(0))
-			else
+			else:
 				result.append(right.pop(0))
 		elif len(left) > 0:
 			result.append(left.pop(0))
@@ -78,3 +81,22 @@ def merge(left, right):
 
 	return result
 ```
+
+#
+
+### 퀵 정렬
+
+- 병합 정렬은 그냥 여러 부분으로 나누는 반면에 퀵 정렬은 분할할 때, 기준 아이템(pivot item)을 두어 위치시킨다.
+
+```python
+def quick_sort(arr, left, right):
+	if left < right:
+		pivot = find_pivot(arr, left, right)
+		quick_sort(arr, left, pivot - 1)
+		quick_sort(arr, pivot + 1, right)
+```
+
+**pivot을 찾는 방법은 여러가지**
+
+1. Hoare Partition 알고리즘
+2. Lomuto Partition 알고리즘
