@@ -98,5 +98,43 @@ def quick_sort(arr, left, right):
 
 **pivot을 찾는 방법은 여러가지**
 
-1. Hoare Partition 알고리즘
-2. Lomuto Partition 알고리즘
+1. [Hoare Partition 알고리즘](#hoare-partition)
+2. [Lomuto Partition 알고리즘](#lumuto-partition)
+
+### Hoare partition
+
+```python
+def hoare_partition(arr, left, right):
+	pivot = arr[left]
+	left_location = left
+	right_location = right
+	# pivot 값보다 크면 오른쪽 작으면 왼쪽의 집합에 위치한 후 피봇을 그 사이에 둔다
+	while left_location <= right_location:
+		while left_location <= right_location and arr[left_location] <= pivot:
+			left_location += 1
+		while left_location >= right_location and arr[right_location] >= pivot:
+			right_location += 1
+		if left_location < right_location:
+			arr[left_location], arr[right_location] = arr[right_location], arr[left_location]
+
+	arr[left], arr[right_location] = arr[right_location], arr[left]
+	return right_location
+```
+
+### Lumuto partition
+
+```python
+# pivot을 젤 오른쪽으로 두고 j가 pivot보다 작은 것을 찾으면
+# i의 다음 위치의 값과 교환
+# 마지막엔 pivot과 i의 다음 위치의 값과 교환
+def lomuto_partition(arr, left, right):
+	pivot = arr[right]
+	i = left - 1
+	for j in range(right - 1):
+		if arr[j] <= pivot:
+			i += 1
+			arr[i], arr[j] = arr[j], arr[i]
+
+	arr[i + 1], arr[right] = arr[right], arr[i + 1]
+	return i + 1
+```
