@@ -31,7 +31,46 @@
 - 부모를 기준으로 작은 것은 왼쪽 자식노드로, 크면 오른쪽 자식노드로 보내서 찾는 값을 기준으로 크기를 비교하여 탐색할 수 있음
 - 이진 탐색과 마찬가지로 미리 정렬이 돼 있어야 함
 
-1. 탐색
+**1. 탐색**
+
+1-1. 자료의 중앙에 있는 원소를 고른다.
+1-2. 중앙 원소의 값과 찾고자하는 값을 비교한다
+1-3. 찾고자하는 값이 중앙 원소보다 작으면 왼쪽(작은쪽)에 대해서 검색을 수행하고
+1-4. 크다면 오른쪽에 대해서 검색을 수행한다.
+
+```python
+# Iteration
+def binary_search(arr, len_arr, target):
+	left = 0
+	right = len_arr - 1
+
+	while left <= right:
+		mid = left + (right - left) // 2
+		if arr[mid] == target:
+			return mid
+		elif arr[mid] > target:
+			right = mid - 1
+		else:
+			left = mid + 1
+
+	return -1
+```
+
+```python
+# Recursion
+def binary_search(arr, left, right, target):
+	if left > right:
+		return -1
+	else:
+		mid = (left + right) // 2
+		if target == arr[mid]:
+			return mid
+		elif target < arr[mid]:
+			return binary_search(arr, left, mid - 1, target)
+		else:
+			return binary_search(arr, mid + 1, right, target)
+```
+
 2. 삽입
 3. 삭제
 
