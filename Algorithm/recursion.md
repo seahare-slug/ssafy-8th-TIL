@@ -31,15 +31,25 @@ def Power_of_2(k):
 
 #
 
-> **모든 조합에 대한 재귀**
+> **조합에 대한 재귀**
 
 ```python
-def combi_all(idx, empty_list):
-    # N은 목적 배열의 길이
-    if idx == N:
-        result.append(combi_list)
-    combi_all(idx + 1, combi_list)  # 현재 위치 값 포함 x
-    combi_all(idx + 1, combi_list + [current_value])  # 현재 위치 값 포함 o
+combi = [-1] * N
+len_original = len(original_arr)
+result = []
+def combination(len_original, N):
+    if N == 0:
+        result.append(combi[:])
+        # print(combi)
+    elif len_original < N:
+        return
+    else:
+        combi[N - 1] = original_arr[len_original - 1]
+        combination(len_original - 1, N - 1)
+        combination(len_original - 1, N)
+
+combination(len_original, N)
+print(result)
 ```
 
 > **부분집합(조합)에 대한 재귀**
