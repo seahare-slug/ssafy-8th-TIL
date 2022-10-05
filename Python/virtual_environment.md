@@ -14,7 +14,7 @@ $ python -m venv {가상환경 폴더 이름}
 $ {가상환경 폴더 이름}\Scripts\acivate
 # 가상환경이 실행 됐을 때 cli 표시
 (가상환경 폴더 이름) $
-# 실행 시켜놓고 원하는 라이브러리들 다운
+# 실행 시킨 상태에서 원하는 라이브러리들 다운
 (가상환경 폴더 이름) $ pip install Django3.0
 (가상환경 폴더 이름) $ pip install -r requirement.txt
 # 가상환경 종료
