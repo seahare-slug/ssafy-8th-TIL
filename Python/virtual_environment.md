@@ -10,7 +10,13 @@ python 3.3 버전 이상부터 가능(command prompt)
 ```python
 # 가상환경 생성(프로젝트 폴더와 동등한 위치)
 $ python -m venv .{가상환경 폴더 이름}
-(가상환경 폴더 이름) $ pip install -r requirement.txt
+
+# 가상환경 활성화 (activate 파일 위치에 맞춰 source 명령)
+$ source .venv/Scripts/activate
+
+# 가상환경에 requirements.txt 내용 설치
+(가상환경 폴더 이름) $ pip install -r requirements.txt
+
 # 가상환경 종료
 (가상환경 폴더 이름) $ deactivate
 ```
