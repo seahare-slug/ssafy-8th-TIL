@@ -23,6 +23,8 @@
    - 양쪽 모두에서 N:1 관계를 가짐
    - Django Relationship Field: `ManyToManyField()`
 
+#
+
 ### ForeignKey(Model_Class, on_delete, \*\*options)
 
 - N:1 관계를 담당하는 Django의 모델 필드 클래스
@@ -86,6 +88,25 @@ def create(request, pk):
       comment.save()
    return ...
 ```
+
+#
+
+**Django에서 User모델 참조할 때**
+
+- models.py에서 참조할 때는 `settings.AUTH_USER_MODEL` (정의하는 곳이기 때문)
+- 다른 모든 곳에서는 `get_user_model()` (사용하는 곳이기 때문에 get)
+
+```python
+# apps/models.py
+
+from django.conf import settings
+
+class Article(models.Model):
+   user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+   ...
+```
+
+#
 
 - **역참조**
   - 나를 참조하는 테이블을 참조하는 것(본인을 외래키를 통해 참조 중인 테이블에 접근하는 것)
