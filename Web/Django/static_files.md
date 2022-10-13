@@ -183,3 +183,68 @@ def create(request):
 
 - `article.image.url`: 업로드된 파일의 경로
 - `aritcle.image`: 업로드된 파일의 이름
+
+#
+
+### Image resizing
+
+- 실제 원본 이미지를 그대로 서버에 올리면 부담이 큼
+- HTML의 `<img>`태그로 직접 사이즈를 정해 놓을 수도 있지만, 업로드 될 때 이미지 자체를 resizing 하는 의미에서 조금 다름
+
+**django-imagekit 모듈 설치 및 등록**
+
+```
+$ pip install django-imagekit
+```
+
+```python
+# settings.py
+
+ISTALLED_APPS = [
+  ...,
+  "imagekit",
+]
+```
+
+**1. 원본이미지를 저장하지 않는 경우**
+
+```python
+# apps/models.py
+
+from imagekit.processors import Thumbnail
+from imagekit.models import ProcessedImageField
+
+# ProcessedImageField는 내부 속성이 바뀌더라도 makemigrations 없이 바로 반영됨
+class Model_Name(models.Model):
+  ...,
+  image = ProcessedImageField(
+    blank=True,
+    upload_to="thumbnails/",
+    processors=[Thumbnail(200,300)],
+    format="JPEG",
+    options={"quality": 80},
+  )
+```
+
+**2. 원본이미지를 저장하는 경우**
+
+- 처음에는 기본 이미지로 사용하다가 썸네일(resizing image)을 사용하면 그때 생성
+
+```python
+# apps/models.py
+
+from imagekit.processors import Thumbnail
+from imagekit.models import ProcessedImageField, ImageSpecField
+
+# ProcessedImageField는 내부 속성이 바뀌더라도 makemigrations 없이 바로 반영됨
+class Model_Name(models.Model):
+  ...,
+  image = models.ImageField(blank=True)
+  image_thumbnail = ProcessedImageField(
+    blank=True,
+    upload_to="thumbnails/",
+    processors=[Thumbnail(200,300)],
+    format="JPEG",
+    options={"quality": 80},
+  )
+```
