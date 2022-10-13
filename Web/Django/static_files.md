@@ -4,6 +4,8 @@
 - 사용자의 요청에 따라 내용이 바뀌는 것이 아닌 파일
 - 웹사이트에서 일반적으로 이미지, JS, CSS 등과 같은 미리 서버에 탑재되어 준비된 파일들과 사용자가 웹에 업로드 하는 파일들이 될 수 있음
 
+#
+
 ### Django에서 정적 파일을 사용하기 위한 단계
 
 1. INSTALLED_APPS 에서 `django.contrib.staticfiles` 포함
@@ -76,12 +78,16 @@
   STATIC_URL = '/static/'
   ```
 
+#
+
 ### 사용자의 정적 파일 업로드 관리
 
 - `ImageField()` 모델 필드를 이용하여 이미지 업로드 관리
 - `FileField()` 모델 필드를 이용하여 파일 업로드 관리
 
-1. settings.py에 `MEDIA_ROOT`, `MEDIA_URL` 설정
+#
+
+**1. settings.py에 `MEDIA_ROOT`, `MEDIA_URL` 설정**
 
 - `MEDIA_ROOT` -사용자가 업로드 한 파일을 보관할 절대 경로
   - Django는 성능을 위해 업로드 파일은 DB에 저장하지 않음
@@ -89,3 +95,91 @@
   - `MEDIA_URL` -`MEDIA_ROOT`에서 제공되는 미디어 파일을 처리하는 URL
     - 업로드된 파일의 주소(URL)를 만들어주는 역할
     - 마찬가지로 `STATIC_URL`과 달라야함
+
+#
+
+**2. 사용자의 미디어 파일 업로드**
+
+- Pillow 라이브러리 필요 (`$ pip install Pillow`)
+- 같은 이름의 파일을 업로드하면 파일 이름 끝에 임의의 난수를 붙여서 저장
+
+```python
+# pjt1/urls.py
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+  ...,
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
+
+- 업로드된 파일의 URL => `settings.MEDIA_URL`
+- 위 URL을 통해 참조하는 실제 파일의 위치 => `settings.MEDIA_ROOT`
+
+```python
+# articles/models.py
+# 이미지 입력받는 form 구성하기
+  # blank 옵션은 필드를 비워둘 수 있음(DB에는 빈 문자열이 저장됨)
+  # null 옵션도 있지만 문자열 기반 필드는 NULL 보다는 빈 문자열을 권장
+  # upload_to 속성을 통해서 새로운 이미지 경로 추가 가능(MEDIA_ROOT 이후로 경로 추가)
+  # 1. 문자열 값이나 경로로 지정
+class Articles(models.Model):
+  ...
+  image = models.ImageField(blank=True, upload_to="something/" )
+  ...
+
+  # 2. 함수로 호출하는 방법
+  # 해당하는 함수는 반드시 인자 2개를 가짐
+  # `instance`: FileField가 정의된 모델 인스턴스
+  # `filename`: 기존 파일 이름
+def articles_image_path(instance, filename):
+  return f"images/{instance.user.username}/{filename}"
+
+class Articles(models.Model):
+  ...
+  image = models.ImageField(blank=True, upload_to=articles_image_path)
+  ...
+```
+
+```html
+<!-- articles/create.html -->
+<!-- 파일 또는 이미지 입력받는 창 표시해주기 -->
+...
+<!-- 파일 또는 이미지 업로드 시에는 form 태그에 enctype 속성을 아래처럼 할당 -->
+<form
+  action="{ url 'articles:create' %}"
+  method="POST"
+  enctype="multipart/form-data"
+>
+  {% csrf_token %} ...
+</form>
+```
+
+```python
+# articles/views.py
+# 파일 및 이미지는 request.POST로 넘길 수 없고 request.FILES 속성으로 넘겨주어야 함
+def create(request):
+  if request.method == "POST":
+    form = ArticleForm(request.POST, request.FILES)
+```
+
+#
+
+**3. 사용자가 업로드한 미디어 파일 표시하기**
+
+- 업로드된 파일의 상대적 URL은 Django가 제공하는 url 속성을 통해 얻을 수 있음
+
+```html
+<!-- articles/detail.html -->
+
+...
+<!-- 이미지 데이터가 있는 경우에만 출력 -->
+<!-- 그렇지 않으면 이미지가 없는 경우에 페이지 자체가 오류가 뜸 -->
+{% if article.image %}
+<img src="{{ article.image.url }}" alt="{{ article.image }}" />
+{% endif %} ...
+```
+
+- `article.image.url`: 업로드된 파일의 경로
+- `aritcle.image`: 업로드된 파일의 이름
