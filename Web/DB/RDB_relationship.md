@@ -15,13 +15,15 @@
 2. N:1 관계
 
    - 한 테이블의 0개 이상의 레코드가 다른 테이블의 레코드 한 개와 관련된 경우
-   - Django Relationship Field: [ForeignKey()](#foreignkey)
+   - Django Relationship Field: [ForeignKey()](#foreignkeymodel_class-on_delete-options)
+   - N:1 관계의 한계
+     - 1의 입장에서 여러개의 N을 참고하고 싶을 때마다 새로운 객체를 계속 생성해주어야 함
 
 3. M:N 관계
 
    - 한 테이블의 0개 이상의 레코드가 다른 테이블의 0개 이상의 레코드와 관련된 경우
    - 양쪽 모두에서 N:1 관계를 가짐
-   - Django Relationship Field: `ManyToManyField()`
+   - Django Relationship Field: [ManyToManyField](#manytomanyfieldmodel_class-options)
 
 #
 
@@ -129,4 +131,54 @@ comments = article.comment_set.all()
 # 1번 게시글에 작성된 모든 댓글 출력하기
 for comment in comments:
    print(comment.content)
+```
+
+#
+
+### ManyToManyField(Model_Class, \*\*options)
+
+- 기존 N:1 관계의 한계를 극복하기 위해서는 중계 테이블을 이용해서 M:N 관계를 필요로하던 두 테이블을 연결 시켜줌
+
+```python
+# 의사와 환자의 M:N 관계
+
+class Reservation(models.Model):
+   doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+   patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+```
+
+- 이러한 과정을 Django에서 `ManyToManyField`로 지원해줌
+
+```python
+# models.py
+
+class Patient(models.Model):
+   doctors = model.ManyToManyField(Doctor)
+   name = models.TextField()
+```
+
+```python
+# patient1이 doctor1에게 예약
+patient1.doctors.add(doctor1)
+
+# doctor1이 patient2를 예약
+doctor1.patient_set.add(patient2)
+
+# patient1이 예약한 의사 목록 확인
+patient1.doctors.all()
+
+# doctor1에게 예약된 환자 목록 확인
+doctor1.patient_set.all()
+
+# doctor1이 patient1의 예약 취소
+doctor1.patient_set.remove(patient1)
+```
+
+- model_set 이름 말고 참조하는 이름을 설정해주고 싶으면 `related_name`사용
+- 그 후로 기존의 model_set으로는 참조할 수 없음
+
+```python
+class Patient(models.Model):
+   doctors = model.ManyToManyField(Doctor, related_name="patients")
+   name = models.TextField()
 ```
