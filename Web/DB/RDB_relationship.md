@@ -138,6 +138,10 @@ for comment in comments:
 ### ManyToManyField(Model_Class, \*\*options)
 
 - 기존 N:1 관계의 한계를 극복하기 위해서는 중계 테이블을 이용해서 M:N 관계를 필요로하던 두 테이블을 연결 시켜줌
+- 이러한 과정을 Django에서 `ManyToManyField`로 지원해줌
+- `ManyToManyField`는 연결하려는 두 모델 중 아무데나 위치해도 괜찮지만 참조와 역참조의 방향은 신경 써주어야 함
+- 중개 모델을 직접 작성하려면 `through`를 통해 모델을 지정할 수 있음, 일반적으로 **중개테이블에 추가 데이터를 사용해 다대다 관계와 연결할 때 사용**
+- `symmetrical`: `ManyToManyField`에서 동일한 모델 두개를 M:N으로 참조할 때 사용. 즉, "너가 내 친구면, 나도 너의 친구"
 
 ```python
 # 의사와 환자의 M:N 관계
@@ -146,8 +150,6 @@ class Reservation(models.Model):
    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
 ```
-
-- 이러한 과정을 Django에서 `ManyToManyField`로 지원해줌
 
 ```python
 # models.py
