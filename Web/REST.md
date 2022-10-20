@@ -37,7 +37,77 @@ def index(request):
 
 **2. JsonResponse()를 사용한 응답**
 
-- Django에서 제공하는 JsonResponse 객체를 통해 python 데이터 타입을 JSON으로 변환하여 응답
+- Django에서 제공하는 `JsonResponse` 객체를 통해 python 데이터 타입을 JSON으로 변환하여 응답
+
+```python
+# apps/views.py
+
+from django.http.response import JsonResponse
+
+def index_json(request):
+	articles = Article.objects.all()
+	articles_json = []
+	# 각 객체의 필드들을 일일이 json 형식으로 담아주어야함
+	for article in articles:
+		articles_json.append(
+			{
+				"id": article.pk,
+				...,
+			}
+		)
+	return JsonResponse(json_file)
+```
 
 **3. Django Serializer를 사용한 응답**
-**4. Django REST framework를 사용한 응답**
+
+- Django에서 제공하는 `HttpResponse`를 활용하여 JSON으로 응답
+- JSON의 모든 필드를 작성할 필요가 없음
+- `seralization`: 직렬화, 데이터 구조나 객체 상태를 나중에 재구성 할 수 있도록 포맷하는 과정
+- Django에서 `serialize`는 Queryset이나 Model instance와 같은 복잡한 데이터를 Python이 쉽게 변환할 수 있는 `JSON`이나 `XML`등으로 바꾸어 줌
+
+```python
+from django.http.response import HttpResponse
+from djago.core import serializers
+
+def index_json2(request):
+	articles = Article.objects.all()
+	data = serializers.serialize("json", articles)
+	return HttpResponse(data, content_type="application/json")
+```
+
+**4. Django REST framework(DRF)를 사용한 응답**
+
+- REST framework를 작성하기 위한 여러 기능을 제공
+- DRF의 serializer는 Django의 Form, ModelForm 등과 매우 유사하게 작동
+
+```python
+# settings.py
+
+INSTALLED_APPS = [
+	...,
+	"rest_framework",
+]
+```
+
+```python
+# apps/serializers.py
+
+from rest_framework import serializers
+from .models import ModelName
+
+class ModelNameSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = ModelName
+		fields = "__all__"
+```
+
+```python
+# apps/views.py
+
+@api_view(["GET"])
+def app_json_3(request):
+	all_objects = ModelName.objects.all()
+	# many 옵션은 여러개의 object를 serializer 할 때 필요
+	serializer = ModelNameSerializer(all_objects, many=True)
+	return Response(serializer.data)
+```
