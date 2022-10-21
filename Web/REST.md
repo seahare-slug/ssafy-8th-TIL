@@ -79,6 +79,8 @@ def index_json2(request):
 
 - REST framework를 작성하기 위한 여러 기능을 제공
 - DRF의 serializer는 Django의 Form, ModelForm 등과 매우 유사하게 작동
+- `api_view` decorator
+  - DRF view 함수가 응답해야 하는 HTTP 메서드 목록을 받음
 
 ```python
 # settings.py
