@@ -99,3 +99,78 @@
 	})
 </script>	
 ```
+
+#
+`v-on`
+- `addEventListener`와 동일한 역할
+- `:`를 통해 `addEventListener`의 첫 번째 인자와 동일한 형태의 값을 전달
+- 대기하고 있던 이벤트가 발생하면 할당된 표현식 실행
+- `v-on` 대신 `@`로 단축하여 사용 가능
+
+```html
+<div id="app">
+	<button v-on:click="number++">
+		increase Number
+	</button>
+	<p>{{ number }}</p>
+</div>
+
+<script>
+	const app = new Vue({
+		el: "#app",
+		data: {
+			number: 0,
+		},
+	})
+</script>
+```
+
+#
+`v-bind`
+- HTML 기본 속성에 Vue data를 연결
+- class의 경우 다양한 형태로 연결 가능
+- `:`로 단축하여 사용 가능
+	- 조건부 바인딩
+		- `{className: 조건표현식}`
+		- 삼항연산자
+	- 다중 바인딩
+		- `[표현식1, 표현식2, ...]`
+- Vue data의 변화에 따라 DOM에 반영하므로 상황에 따라 유동적으로 할당 가능
+
+```html
+<div id="app">
+	<a v-bind:href="url">Go to Google</a>
+</div>
+
+<script>
+	const app = new Vue({
+		el: "#app",
+		data: {
+			url: "https://www.google.com/",
+		},
+	})
+</script>
+```
+
+#
+`v-model`
+- Vue instance와 DOM의 양방향 바인딩
+- Vue data 변경 시 v-model로 연결된 사용자 입력 element에도 변경이 반영
+
+```html
+<div id="app">
+	<h3>{{ msg }}</h3>
+	<input v-model="msg" type="text">
+</div>
+
+<script>
+	const app = new Vue({
+		el: "#app",
+		data: {
+			msg: "",
+		},
+	})
+</script>
+```
+
+Q 그럼 클래스 바인딩때 빼고 {{}}랑 차이는?
