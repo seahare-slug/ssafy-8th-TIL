@@ -24,6 +24,42 @@
 - 계산된 값이기 때문에 사용할 때 `()`를 붙이지 않음
 - 참조하는 값이 변하면 다시 호출되어 재계산함(메서드는 상관없이 그냥 사용할 때마다 호출됨)
 
+
+### `watch`
+- 특정 데이터의 변화를 감지하는 기능
+	1. watch 객체를 정의
+	2. 감시할 대상 data를 지정
+	3. data가 변할 시 실행 할 함수를 정의
+		- 첫 번째 인자는 변동 전 data, 두 번째 인자는 변동 후 data
+```html
+<button @click="number++"></button>
+
+<script>
+	const app = new Vue({
+		data: {
+		number: 0,
+		},
+		watch: {
+			number: function (val, oldVal) {
+				console.log(val, oldVal)
+			},
+		}
+	})
+</script>
+```
++)
+- 실행함수를 Vue method로 대체 가능
+	1. 감시 대상 data의 이름으로 객체 생성
+	2. 실행하고자 하는 method를 handler에 문자열 형태로 할당
+- Array, Object의 내부 요소 변경을 감지하기 위해서는 `deep`속성 추가 필요
+
+### `filters`
+- 텍스트 형식화를 할 수 있는 필터
+- `interpolation`이나 `v-bind`를 이용할 때 적용 가능
+- 표현식 마지막에 `|`와 함께 추가하여 사용
+- chaining 사용 가능
+
+
 ### Template Interpolation
 - 가장 기본적인 바인딩 방법
 - 중괄호 2개 표기, DTL과 동일한 형태의 표기 (`{{}}`)
