@@ -250,5 +250,55 @@ export default {
 	- `$emit("event-name")`가 실행되면 event-name 이벤트가 발생하는 것
 
 ```html
-<!-- MyChild.vue -->\
+<!-- MyChild.vue -->
+<template>
+	<div>
+		...
+		<!-- childToParent 함수 실행 -->
+		<button @click="childToParent">클릭!</button>
+	</div>
+</template>
+
+<script>
+export default {
+	...
+	methods: {
+		childToParent: function () {
+			// 부모에 선언된 자신에게 child-to-parent라는 이벤트 스스로 발생
+			// 두 번째 인자를 통해 해당 이벤트의 호출 함수의 매개변수로 전달 가능
+			this.$emit("child-to-parent", "argument")
+		}
+	}
+}
+</script>
 ```
+
+```html
+<!-- MyParent.vue -->
+<template>
+	...
+	<!-- 부모에 선언된 자신에게 이벤트를 발생시켜 부모의 함수를 실행 -->
+	<MyChild @child-to-parent="parentGetEvent"/>
+</template>
+
+<script>
+export default {
+	...
+	methods: {
+		parentGetEvent: function (argument) {
+			console.log("이벤트는 자식이 발생했지만 그걸 가지고 있던 부모의 함수가 실행")
+			// emit의 두 번째 인자를 통해 해당 이벤트의 호출 함수의 매개변수로 전달 가능
+			console.log(argument)
+		}
+	}
+}
+</script>
+```
+
+> pass props / emit event convention(style guide)
+
+- HTML 요소에서는 `kebab-case`
+- JavaScript 요소에서는 `camelCase`
+
+- props
+	- 상위 => 하위 흐름에서 HTML 요소를 내려줌: `kebab-case`

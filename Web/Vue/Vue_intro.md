@@ -45,9 +45,7 @@ const app = new Vue({
 })
 ```
 
-### `v-model`
 - 눈에 보이는 화면을 조작하는 것이 아닌 Vue가 가진 data를 조작
-- input tag에 `v-model` 작성
 - input에 값을 입력 -> Vue data에 반영 -> Dom 반영
 - vanila JS에서는 여러가지 공통된 값을 변경하려면 위치에 따른 값을 전부 선택해서 바꿔야했지만
 - Vue에서는 변수처럼 하나의 데이터로 관리가 가능

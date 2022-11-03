@@ -157,6 +157,7 @@
 - Vue instance와 DOM의 양방향 바인딩
 - Vue data 변경 시 v-model로 연결된 사용자 입력 element에도 변경이 반영
 
+
 ```html
 <div id="app">
 	<h3>{{ msg }}</h3>
