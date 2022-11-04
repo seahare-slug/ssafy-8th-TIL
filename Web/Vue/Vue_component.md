@@ -294,11 +294,13 @@ export default {
 }
 </script>
 ```
+#
+### pass props / emit event convention(style guide)
 
-> pass props / emit event convention(style guide)
+- **props**
+	- 상위 => 하위 흐름에서 상위에서 **HTML 요소**를 통해 내려줌: `kebab-case`
+	- 하위에서 요소를 받을 때는 **JavaScript를 통해** 받음: `camelCase`
 
-- HTML 요소에서는 `kebab-case`
-- JavaScript 요소에서는 `camelCase`
-
-- props
-	- 상위 => 하위 흐름에서 HTML 요소를 내려줌: `kebab-case`
+- **emit**
+	- emit 이벤트를 발생시키면 **HTML 요소가 이벤트를 청취**함: `kebab-case`
+	- 메서드, 변수명 등은 **JavaScript에서 사용**함: `camelCase`
